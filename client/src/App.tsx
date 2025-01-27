@@ -2,6 +2,7 @@ import { Stack, Box } from "@chakra-ui/react";
 import Navbar from "./components/Navbar";
 import TodoForm from "./components/TodoForm";
 import { useColorModeValue } from "@chakra-ui/color-mode";
+import TodoList from "./components/TodoList";
 
 function App() {
     return (
@@ -9,6 +10,7 @@ function App() {
             <Navbar />
             <Box width={900} mx={"auto"}>
                 <TodoForm />
+                <TodoList />
             </Box>
         </Stack>
     );
