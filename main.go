@@ -23,17 +23,22 @@ var collection *mongo.Collection
 func main() {
 	fmt.Println("Hello, world!")
 
+	// godotenv is pacakage that handles "dot" "env" file.
 	err := godotenv.Load(".env")
 	if err != nil {
 		log.Fatal("Error loading .env file", err)
 	}
 
+	// get environment variables with os package
 	MONGODB_URI := os.Getenv("MONGODB_URI")
 	clientOptions := options.Client().ApplyURI(MONGODB_URI)
 	client, err := mongo.Connect(context.Background(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
 	}
+	// close database connections just before function returns
+	defer client.Disconnect(context.Background())
+
 	err = client.Ping(context.Background(), nil)
 	if err != nil {
 		log.Fatal(err)
