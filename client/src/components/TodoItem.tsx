@@ -8,10 +8,9 @@ export default function TodoItem({ todo }: { todo: any }) {
             <Flex
                 flex={1}
                 alignItems={"center"}
-                // does not work
-                border={"2px"}
-                borderColor={"red.400"}
-                p={2}
+                borderWidth={1}
+                borderColor={"white"}
+                p={4}
                 borderRadius={"lg"}
                 justifyContent={"space-between"}
             >
