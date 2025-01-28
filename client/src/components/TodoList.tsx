@@ -2,6 +2,12 @@ import { useState } from "react";
 import { Flex, Spinner, Stack, Text } from "@chakra-ui/react";
 import TodoItem from "./TodoItem";
 
+export type Todo = {
+    _id: number;
+    body: string;
+    completed: boolean;
+}
+
 export default function TodoList() {
     const [isLoading, setIsLoading] = useState(true);
     const todos = [
