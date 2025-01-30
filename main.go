@@ -9,12 +9,13 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/joho/godotenv"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 type Todo struct {
-	ID int `json:"_id" bson:"_id"`
+	ID primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
 	Completed bool `json:"completed"`
 	Body string `json:"body"`
 }
@@ -49,7 +50,7 @@ func main() {
 	app := fiber.New()
 
 	app.Get("/api/todos", getTodos)
-	// app.Post("/api/todos", createTodos)
+	app.Post("/api/todos", createTodos)
 	// app.Patch("/api/todos/:id", updateTodos)
 	// app.Delete("/api/todos/:id", deleteTodos)
 
@@ -80,7 +81,24 @@ func getTodos(c *fiber.Ctx) error {
 	}
 	return c.JSON(todos)
 }
-// func createTodos(c *fiber.Ctx) error {}
+
+func createTodos(c *fiber.Ctx) error {
+	todo := new(Todo) // todo is a pointer type represents empty Todo type
+	if err := c.BodyParser(todo); err != nil {
+		return err
+	}
+	if todo.Body == "" {
+		return c.Status(400).JSON(fiber.Map{"error": "Todo body cannot be empty"})
+	}
+
+	insertResult, err := collection.InsertOne(context.Background(), todo)
+	if err != nil {
+		return err
+	}
+	todo.ID = insertResult.InsertedID.(primitive.ObjectID)
+	return c.Status(200).JSON(todo)
+}
+
 // func updateTodos(c *fiber.Ctx) error {}
 // func deleteTodos(c *fiber.Ctx) error {}
 
