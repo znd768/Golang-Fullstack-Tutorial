@@ -22,12 +22,12 @@ export default function TodoItem({ todo }: { todo: Todo }) {
                     {todo.body}
                 </Text>
                 {todo.completed && (
-                    <Badge ml="1" colorScheme="green">
+                    <Badge ml="1" colorPalette="green">
                         Done
                     </Badge>
                 )}
                 {!todo.completed && (
-                    <Badge ml="1" colorScheme="yellow">
+                    <Badge ml="1" colorPalette="yellow">
                         In progress
                     </Badge>
                 )}
