@@ -4,6 +4,8 @@ import TodoForm from "./components/TodoForm";
 import { useColorModeValue } from "@chakra-ui/color-mode";
 import TodoList from "./components/TodoList";
 
+export const BASE_URL = "http://localhost:5000/api"
+
 function App() {
     return (
         <Stack h="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
